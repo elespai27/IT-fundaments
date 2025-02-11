@@ -8,7 +8,7 @@ function myFunction() {
   let atur = document.getElementById("atur").value;
   let resultDiv = document.getElementById("result");
 
-  if (edat >= 18 && titol == "si" && atur == "si") {
+  if ((edat >= 18 && titol == "si") || atur == "si") {
     resultDiv.innerHTML = "Tens dret a beca";
   } else {
     resultDiv.innerHTML = "No tens dret a beca";

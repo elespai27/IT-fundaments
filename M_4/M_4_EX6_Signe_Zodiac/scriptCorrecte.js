@@ -5,12 +5,14 @@ function mostrar() {
   let mes = parseInt(document.getElementById("mes").value);
   let resultDiv = document.getElementById("result");
 
-  if (isNaN(dia) || isNaN(mes) || dia < 1 || dia > 31 || mes < 1 || mes > 12) {
+  if (isNaN(dia) || (dia < 1 || dia > 31)) {
     resultDiv.innerHTML = `Escriu un valor válid`;
+    return;
   }
+  //separar los condicionales mes en el switch
 
   switch (mes) {
-    case 1:
+    case 1://el parse int elimina el 0 davant del número
       if (dia >= 20) {
         resultDiv.innerHTML = `El teu signo de zodíac és: Aquari`;
       } else {
@@ -95,7 +97,7 @@ function mostrar() {
       }
       break;
     default:
-      resultDiv.innerHTML = `Escriu un valor válid`;
+      resultDiv.innerHTML = `Escriu un mes válid`;
       break;
   }
 }

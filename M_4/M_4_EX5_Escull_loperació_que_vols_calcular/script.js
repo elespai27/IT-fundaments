@@ -12,6 +12,7 @@ function operar(){
     if(isNaN(num1) || isNaN(num2)){ 
     //|| num1 == "" || num2 == "" || num1 == null || num2 == null són redundantes, IsnNaN ja ho comprova
         resultDiv.innerHTML = "introdueix un valor vàlid";
+        return;
     }
 
     switch (operador)  {
@@ -31,6 +32,8 @@ function operar(){
                 resultDiv.innerHTML = `El resultat de la divisió és: ${num1 / num2}`;
             }
             break;
-
+            default:
+                resultDiv.innerHTML = "Operació no vàlida";     
+                
     }
 }

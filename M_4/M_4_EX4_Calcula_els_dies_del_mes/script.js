@@ -45,6 +45,8 @@ function calculaDies() {
         case 12:
             resultDiv.innerHTML = `El mes ${mes} té 31 dies`;
             break;
+            default:
+                resultDiv.innerHTML = "El mes no és vàlid";
         }
 
 
