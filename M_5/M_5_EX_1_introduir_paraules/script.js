@@ -1,20 +1,21 @@
 "use strict";
 
 
-
-
-
 function començar() {
   let numParaules = parseInt(prompt("Quantes paraules vols introduir?"));
-  let paraules = prompt("Introdueix les paraules");
   let arrayParaules = [];
   let resultDiv = document.getElementById("result");
+  let respuesta = ""; 
 
-  for (let index = 0; index < numParaules - 1; index++) {
-    let paraules = prompt("Introdueix les paraules");
-    arrayParaules.push(paraules)[index];
+  for (let index = 0; index < numParaules; index++) {
+    let paraula = prompt("Introdueix les paraules");
+    arrayParaules.push(paraula);
   }
 
-    resultDiv.innerHTML = arrayParaules.join(", ");
+  for (let index = 0; index < arrayParaules.length; index++) {
+    respuesta += arrayParaules[index] + " ";
+}
+resultDiv.innerHTML = respuesta;
+
 }
 
