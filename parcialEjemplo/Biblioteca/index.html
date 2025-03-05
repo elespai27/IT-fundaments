@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examen: Gestión de Inventario de Biblioteca</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .instructions {
+      margin-bottom: 20px;
+    }
+    .code-block {
+      background-color: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+    .example {
+      margin-top: 20px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Examen: Gestión de Inventario de Biblioteca</h1>
+    <p class="instructions">
+      Estás desarrollando un programa para gestionar el inventario de una biblioteca. Los datos se almacenan en tres arrays:
+    </p>
+    <ul>
+      <li>Un array que contiene los <strong>títulos de los libros</strong>.</li>
+      <li>Un array que contiene la <strong>cantidad de ejemplares disponibles</strong> de cada libro.</li>
+      <li>Un array que contiene el <strong>precio por ejemplar</strong> de cada libro.</li>
+    </ul>
+
+    <h2>Reglas del Ejercicio:</h2>
+    <ol>
+      <li>Cada elemento en los arrays corresponde a un libro específico.</li>
+      <li>Los valores en los arrays pueden incluir "null", "undefined" o valores negativos.</li>
+      <li>Escribe una función que reciba tres arrays: "titulosLibros", "cantidades", y "precios".</li>
+      <li>La función debe calcular el valor total del inventario de la biblioteca.</li>
+      <li>Los valores negativos, "null", y "undefined" no deben afectar el cálculo del valor total.</li>
+      <li>La función debe aceptar tres arrays de la misma longitud y devolver un mensaje de error si no lo son.</li>
+      <li>La función debe devolver el valor total del inventario como un número.</li>
+      <li>Los arrays de entrada no deben ser modificados.</li>
+    </ol>
+
+    <h2>Ejemplo:</h2>
+    <div class="example">
+      Entrada:
+      <div class="code-block">
+        const titulosLibros = ["El Quijote", "Cien Años de Soledad", "1984", "Moby Dick", "Hamlet"];<br>
+        const cantidades = [5, null, 10, undefined, -2];<br>
+        const precios = [20, 15, 10, 25, 30];
+      </div>
+
+      Salida esperada:
+      <div class="code-block">
+        El valor total del inventario es: 350
+      </div>
+    </div>
+
+    <h2>Preguntas del Examen:</h2>
+    <ol>
+      <li><strong>Parte 1:</strong> Escribe una función llamada `validarLongitudArrays` que reciba tres arrays y verifique si tienen la misma longitud. Devuelve `true` si coinciden o `false` si no.</li>
+      
+      <li><strong>Parte 2:</strong> Escribe una función llamada `filtrarDatosInvalidos` que reciba un array y elimine valores inválidos como `null`, `undefined` o números negativos. Devuelve un nuevo array sin modificar el original.</li>
+
+      <li><strong>Parte 3:</strong> Escribe una función llamada `calcularValorInventario` que reciba tres arrays (`titulosLibros`, `cantidades`, y `precios`) y calcule el valor total del inventario siguiendo las reglas mencionadas. Devuelve el valor total como un número.</li>
+
+      <li><strong>Parte 4:</strong> Modifica la función `calcularValorInventario` para que devuelva un mensaje de error si los arrays no tienen la misma longitud o si alguno contiene datos inválidos después del filtrado.</li>
+
+      <li><strong>Parte 5:</strong> Escribe al menos dos casos adicionales con diferentes datos para probar tus funciones y asegúrate de que funcionan correctamente.</li>
+    </ol>
+
+    <footer>
+      ©2025 Examen diseñado por [Tu Nombre]. ¡Buena suerte!
+    </footer>
+  </div>
+</body>
+</html>

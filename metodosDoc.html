@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guide to JavaScript Array and String Methods</title>
+  <!-- PrismJS for syntax highlighting (Dark Theme Tomorrow) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" integrity="sha512-CVoSwvCi8QKKH43D0wvTYK3+kRZ9geU44SmHjU2S/58FylajgHTG4k8kVt5t9dr4YgFDwmiDUznWPNaxwFKW9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-+zddCH+rJrQpL5kIOdD/Mv/6XFLyk4ujOF/f6JgK7dyHCLoN3fLjZJw65e45f2HNV+8ZpBZP47dTgyYuFZAXxg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    /* Global Dark Theme */
+    body {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    /* Fixed Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #333333;
+      color: #d4d4d4;
+      padding: 10px 20px;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 60px; /* Ajuste conforme a altura do header */
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .header-content h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    .header-content input {
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      margin: 0 auto;
+      flex: 1;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .header-content button {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      z-index: 1001;
+      background-color: #61afef;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      color: #1e1e1e;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .header-content button:hover {
+      background-color: #519aba;
+    }
+
+    /* Sidebar for Full Index */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 320px;
+      height: 100%;
+      background-color: #2d2d2d;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.visible {
+      transform: translateX(0);
+    }
+
+    .sidebar .sidebar-header {
+      position: sticky;
+      top: 0;
+      background-color: #2d2d2d;
+      z-index: 1;
+      padding: 20px;
+      border-bottom: 1px solid #444;
+    }
+
+    .sidebar .sidebar-header h2 {
+      margin: 0;
+      font-size: 1.3em;
+      color: #ffffff;
+    }
+
+    .sidebar .sidebar-header input {
+      width: 100%;
+      padding: 5px 8px;
+      margin-top: 10px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+    }
+
+    .sidebar ul {
+      flex: 1;
+      list-style: none;
+      padding: 10px;
+      margin: 0;
+      overflow-y: auto;
+    }
+
+    .sidebar li {
+      margin: 8px 0;
+    }
+
+    .sidebar a {
+      color: #61afef;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+
+    .sidebar a:hover {
+      text-decoration: underline;
+    }
+
+    .sidebar .close-btn {
+      background-color: #61afef;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: #1e1e1e;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 960px;
+      margin: 80px auto 40px auto;
+      padding: 30px;
+      background-color: #252526;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    /* Sections and Group Titles */
+    .section {
+      margin-bottom: 2em;
+    }
+
+    .group-title {
+      margin-top: 2em;
+      border-bottom: 1px solid #444444;
+      padding-bottom: 0.3em;
+      color: #ffffff;
+    }
+
+    /* Custom Code Block Styles */
+    .code-block {
+      position: relative;
+      margin: 1em 0;
+      border: 1px solid #3c3c3c;
+      border-radius: 5px;
+      overflow: hidden;
+      background-color: #1e1e1e;
+    }
+
+    .code-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2d2d2d;
+      padding: 0.5em 1em;
+      font-family: sans-serif;
+      font-size: 0.85em;
+      color: #c5c5c5;
+    }
+
+    .code-block-header .language-label {
+      font-weight: bold;
+    }
+
+    .copy-button {
+      background: none;
+      border: none;
+      color: #61afef;
+      cursor: pointer;
+      font-size: 0.85em;
+    }
+
+    .copy-button:hover {
+      text-decoration: underline;
+    }
+
+    .code-block pre {
+      margin: 0;
+      padding: 1em;
+      overflow-x: auto;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 60px; /* Ajuste conforme a altura do header */
+    }
+  </style>
+</head>
+<body>
+  <!-- Fixed Header -->
+  <header>
+    <div class="header-content">
+      <h1>JS Guide</h1>
+      <input type="text" id="searchInput" placeholder="Search method..." onkeyup="filterIndex()" />
+      <button id="toggleSidebar" onclick="toggleSidebar()">Index</button>
+    </div>
+  </header>
+
+  <!-- Sidebar with Full Index -->
+  <div id="sidebar" class="sidebar">
+    <button class="close-btn" onclick="toggleSidebar()">Close</button>
+    <h2>Full Index</h2>
+    <ul id="indexList">
+      <!-- General Group 1: Search Methods -->
+      <li><a href="#general-group1-title">Group 1: Search Methods</a></li>
+      <!-- Group 1: Direct Search (Start → End) -->
+      <li><a href="#group1-direct-search">[Direct Search (Start → End)]</a></li>
+      <li><a href="#group1-array-indexof">1. Array.indexOf()</a></li>
+      <li><a href="#group1-array-includes">2. Array.includes()</a></li>
+      <li><a href="#group1-array-find">3. Array.find()</a></li>
+      <li><a href="#group1-array-findindex">4. Array.findIndex()</a></li>
+
+      <!-- Group 2: Reverse Search (End → Start) -->
+      <li><a href="#group2-reverse-search">[Reverse Search (End → Start)]</a></li>
+      <li><a href="#group2-array-lastindexof">5. Array.lastIndexOf()</a></li>
+      <li><a href="#group2-array-findlast">6. Array.findLast()</a></li>
+      <li><a href="#group2-array-findlastindex">7. Array.findLastIndex()</a></li>
+
+      <!-- Group 3: Condition Verification -->
+      <li><a href="#group3-condition-verification">[Condition Verification]</a></li>
+      <li><a href="#group3-array-every">8. Array.every()</a></li>
+      <li><a href="#group3-array-some">9. Array.some()</a></li>
+
+      <!-- General Group 2: Array Manipulation -->
+      <li><a href="#general-group2-title">Group 2: Array Manipulation</a></li>
+      <!-- Group 4: Adding/Removing at the End -->
+      <li><a href="#group4-adding-removing-end">[Adding/Removing at the End]</a></li>
+      <li><a href="#group4-array-push">1. Array.push()</a></li>
+      <li><a href="#group4-array-pop">2. Array.pop()</a></li>
+
+      <!-- Group 5: Adding/Removing at the Beginning -->
+      <li><a href="#group5-adding-removing-beginning">[Adding/Removing at the Beginning]</a></li>
+      <li><a href="#group5-array-shift">3. Array.shift()</a></li>
+      <li><a href="#group5-array-unshift">4. Array.unshift()</a></li>
+
+      <!-- Group 6: Specific Position Modification -->
+      <li><a href="#group6-specific-modification">[Specific Position Modification]</a></li>
+      <li><a href="#group6-array-splice">5. Array.splice()</a></li>
+
+      <!-- Group 7: Order Modification -->
+      <li><a href="#group7-order-modification">[Order Modification]</a></li>
+      <li><a href="#group7-array-reverse">6. Array.reverse()</a></li>
+      <li><a href="#group7-array-sort">7. Array.sort()</a></li>
+
+      <!-- Group 8: Filling and Copying -->
+      <li><a href="#group8-filling-copying">[Filling and Copying]</a></li>
+      <li><a href="#group8-array-fill">8. Array.fill()</a></li>
+      <li><a href="#group8-array-within">9. ArrayWithin()</a></li>
+
+      <!-- General Group 3: Array Creation and Transformation -->
+      <li><a href="#general-group3-title">Group 3: Array Creation and Transformation</a></li>
+      <!-- Group 9: Creating New Arrays (Without Modifying the Original) -->
+      <li><a href="#group9-new-arrays">[Creating New Arrays] <br>(Without Modifying the Original)</a></li>
+      <li><a href="#group9-array-concat">1. Array.concat()</a></li>
+      <li><a href="#group9-array-slice">2. Array.slice()</a></li>
+      <li><a href="#group9-array-with">3. Array.with()</a></li>
+
+      <!-- Group 10: Nested Array Manipulation -->
+      <li><a href="#group10-nested-arrays">[Nested Array Manipulation]</a></li>
+      <li><a href="#group10-array-flat">4. Array.flat()</a></li>
+      <li><a href="#group10-array-flatmap">5. Array.flatMap()</a></li>
+
+      <!-- Group 11: Immutable Copy Methods (ES2023+) -->
+      <li><a href="#group11-immutable-copy">[Immutable Copy Methods (ES2023+)]</a></li>
+      <li><a href="#group11-array-toreversed">6. Array.toReversed()</a></li>
+      <li><a href="#group11-array-tosorted">7. Array.toSorted()</a></li>
+      <li><a href="#group11-array-tospliced">8. Array.toSpliced()</a></li>
+
+      <!-- General Group 4: Iteration and Accumulation -->
+      <li><a href="#general-group4-title">Group 4: Iteration and Accumulation</a></li>
+      <!-- Group 12: Iteration and Transformation -->
+      <li><a href="#group12-iteration-transformation">[Iteration and Transformation]</a></li>
+      <li><a href="#group12-array-foreach">1. Array.forEach()</a></li>
+      <li><a href="#group12-array-map">2. Array.map()</a></li>
+      <li><a href="#group12-array-filter">3. Array.filter()</a></li>
+
+      <!-- Group 13: Reduction and Accumulation -->
+      <li><a href="#group13-reduction-accumulation">[Reduction and Accumulation]</a></li>
+      <li><a href="#group13-array-reduce">4. Array.reduce()</a></li>
+      <li><a href="#group13-array-reduceright">5. Array.reduceRight()</a></li>
+
+      <!-- General Group 5: Array Iterators -->
+      <li><a href="#general-group5-title">Group 5: Array Iterators</a></li>
+      <!-- Group 14: Iterators -->
+      <li><a href="#group14-iterators">[Iterators]</a></li>
+      <li><a href="#group14-array-entries">6. Array.entries()</a></li>
+      <li><a href="#group14-array-keys">7. Array.keys()</a></li>
+      <li><a href="#group14-array-values">8. Array.values()</a></li>
+      <li><a href="#group14-array-symboliterator">9. Array[Symbol.iterator]()</a></li>
+
+      <!-- General Group 6: String Manipulation -->
+      <li><a href="#general-group6-title">Group 6: String Manipulation</a></li>
+      <!-- Group 15: String Methods -->
+      <li><a href="#group15-string-methods">[String Methods]</a></li>
+      <li><a href="#group15-length">1. String.length</a></li>
+      <li><a href="#group15-charat">2. String.charAt()</a></li>
+      <li><a href="#group15-charcodeat">3. String.charCodeAt()</a></li>
+      <li><a href="#group15-at">4. String.at()</a></li>
+      <li><a href="#group15-slice-string">5. String.slice()</a></li>
+      <li><a href="#group15-substring-string">6. String.substring()</a></li>
+      <li><a href="#group15-substr-string">7. String.substr()</a></li>
+      <li><a href="#group15-touppercase-string">8. String.toUpperCase()</a></li>
+      <li><a href="#group15-tolowercase-string">9. String.toLowerCase()</a></li>
+      <li><a href="#group15-concat-string">10. String.concat()</a></li>
+      <li><a href="#group15-trim-string">11. String.trim()</a></li>
+      <li><a href="#group15-trimstart-string">12. String.trimStart()/trimEnd()</a></li>
+      <li><a href="#group15-padstart-string">13. String.padStart()</a></li>
+      <li><a href="#group15-padend-string">14. String.padEnd()</a></li>
+      <li><a href="#group15-repeat-string">15. String.repeat()</a></li>
+      <li><a href="#group15-replace-string">16. String.replace()</a></li>
+      <li><a href="#group15-replaceall-string">17. String.replaceAll()</a></li>
+      <li><a href="#group15-split-string">18. String.split()</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- General Group 1: Search Methods -->
+    <h1 class="general-group1-title" id="general-group1-title">Group 1: Search Methods</h1>
+    <!-- Group 1: Direct Search (Start → End) -->
+    <div class="section" id="group1-direct-search">
+      <h2 class="group-title">Direct Search (Start → End)</h2>
+      <h3 id="group1-array-indexof">1. <code>Array.indexOf()</code></h3>
+      <p><strong>Description:</strong> Finds the first index of an element.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const arr = [2, 5, 2, 7];
+console.log(arr.indexOf(2)); // 0</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function indexOf(array, value) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === value) return i;
+  }
+  return -1;
+}</code></pre>
+      </div>
+      
+      <h3 id="group1-array-includes">2. <code>Array.includes()</code></h3>
+      <p><strong>Description:</strong> Checks if an element exists.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(arr.includes(5)); // true</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function includes(array, value) {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === value) return true;
+  }
+  return false;
+}</code></pre>
+      </div>
+      
+      <h3 id="group1-array-find">3. <code>Array.find()</code></h3>
+      <p><strong>Description:</strong> Returns the first element that satisfies a condition.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(arr.find(num => num > 4)); // 5</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function find(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i], i, array)) return array[i];
+  }
+  return undefined;
+}</code></pre>
+      </div>
+      
+      <h3 id="group1-array-findindex">4. <code>Array.findIndex()</code></h3>
+      <p><strong>Description:</strong> Returns the first index that satisfies a condition.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(arr.findIndex(num => num > 4)); // 1</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function findIndex(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i], i, array)) return i;
+  }
+  return -1;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 2: Reverse Search (End → Start) -->
+    <div class="section" id="group2-reverse-search">
+      <h2 class="group-title">Reverse Search (End → Start)</h2>
+      <h3 id="group2-array-lastindexof">5. <code>Array.lastIndexOf()</code></h3>
+      <p><strong>Description:</strong> Finds the last index of an element.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(arr.lastIndexOf(2)); // 2</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function lastIndexOf(array, value) {
+  for (let i = array.length - 1; i >= 0; i--) {
+    if (array[i] === value) return i;
+  }
+  return -1;
+}</code></pre>
+      </div>
+      
+      <h3 id="group2-array-findlast">6. <code>Array.findLast()</code></h3>
+      <p><strong>Description:</strong> Returns the last element that satisfies a condition.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(arr.findLast(num => num > 4)); // 7</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function findLast(array, callback) {
+  for (let i = array.length - 1; i >= 0; i--) {
+    if (callback(array[i], i, array)) return array[i];
+  }
+  return undefined;
+}</code></pre>
+      </div>
+      
+      <h3 id="group2-array-findlastindex">7. <code>Array.findLastIndex()</code></h3>
+      <p><strong>Description:</strong> Returns the last index that satisfies a condition.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(arr.findLastIndex(num => num > 4)); // 3</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function findLastIndex(array, callback) {
+  for (let i = array.length - 1; i >= 0; i--) {
+    if (callback(array[i], i, array)) return i;
+  }
+  return -1;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 3: Condition Verification -->
+    <div class="section" id="group3-condition-verification">
+      <h2 class="group-title">Condition Verification</h2>
+      <h3 id="group3-array-every">8. <code>Array.every()</code></h3>
+      <p><strong>Description:</strong> Checks if every element satisfies a condition.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(arr.every(num => num > 1)); // false</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function every(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    if (!callback(array[i], i, array)) return false;
+  }
+  return true;
+}</code></pre>
+      </div>
+      
+      <h3 id="group3-array-some">9. <code>Array.some()</code></h3>
+      <p><strong>Description:</strong> Checks if at least one element satisfies a condition.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(arr.some(num => num > 6)); // true</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function some(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i], i, array)) return true;
+  }
+  return false;
+}</code></pre>
+      </div>
+      <p><strong>Comparisons and Use Cases:</strong></p>
+      <ul>
+        <li><code>indexOf()</code>: Returns the first index → To find an element's position.</li>
+        <li><code>lastIndexOf()</code>: Returns the last index ← To find the last occurrence.</li>
+        <li><code>includes()</code>: Boolean → For quick existence checks.</li>
+        <li><code>find()</code>/<code>findLast()</code>: Returns the element → For finding complex objects.</li>
+        <li><code>findIndex()</code>/<code>findLastIndex()</code>: Returns the index → For finding object positions.</li>
+        <li><code>every()</code>: Boolean → For complete data validation.</li>
+        <li><code>some()</code>: Boolean → To check if at least one element is valid.</li>
+      </ul>
+      <p><strong>Advanced Examples:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">// find() for objects:
+const users = [{id: 1}, {id: 2}];
+console.log(users.find(user => user.id === 2)); // {id: 2}
+
+// every() for validation:
+const values = [15, 20, 25];
+console.log(values.every(age => age >= 18)); // false
+
+// some() with strings:
+const words = ["JS", "Python"];
+console.log(words.some(p => p.includes("Py"))); // true</code></pre>
+      </div>
+    </div>
+    <!-- General Group 2: Array Manipulation -->
+    <h1 class="general-group2-title" id="general-group2-title">Group 2: Array Manipulation</h1>
+    <!-- Group 4: Adding/Removing at the End -->
+    <div class="section" id="group4-adding-removing-end">
+      <h2 class="group-title">Adding/Removing at the End</h2>
+      <h3 id="group4-array-push">1. <code>Array.push()</code></h3>
+      <p><strong>Description:</strong> Adds elements to the end of the array.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const arr = [1, 2];
+arr.push(3, 4); // [1, 2, 3, 4]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function push(array, ...elements) {
+  for (let i = 0; i < elements.length; i++) {
+    array[array.length] = elements[i];
+  }
+  return array.length;
+}</code></pre>
+      </div>
+      
+      <h3 id="group4-array-pop">2. <code>Array.pop()</code></h3>
+      <p><strong>Description:</strong> Removes the last element.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">arr.pop(); // [1, 2, 3]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function pop(array) {
+  if (array.length === 0) return undefined;
+  const removed = array[array.length - 1];
+  array.length--;
+  return removed;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 5: Adding/Removing at the Beginning -->
+    <div class="section" id="group5-adding-removing-beginning">
+      <h2 class="group-title">Adding/Removing at the Beginning</h2>
+      <h3 id="group5-array-shift">3. <code>Array.shift()</code></h3>
+      <p><strong>Description:</strong> Removes the first element.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">arr.shift(); // [2, 3]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function shift(array) {
+  if (array.length === 0) return undefined;
+  const removed = array[0];
+  for (let i = 0; i < array.length - 1; i++) {
+    array[i] = array[i + 1];
+  }
+  array.length--;
+  return removed;
+}</code></pre>
+      </div>
+      
+      <h3 id="group5-array-unshift">4. <code>Array.unshift()</code></h3>
+      <p><strong>Description:</strong> Adds elements at the beginning.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">arr.unshift(0); // [0, 1, 2, 3]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function unshift(array, ...elements) {
+  for (let i = array.length + elements.length - 1; i >= elements.length; i--) {
+    array[i] = array[i - elements.length];
+  }
+  for (let j = 0; j < elements.length; j++) {
+    array[j] = elements[j];
+  }
+  return array.length;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 6: Specific Position Modification -->
+    <div class="section" id="group6-specific-modification">
+      <h2 class="group-title">Specific Position Modification</h2>
+      <h3 id="group6-array-splice">5. <code>Array.splice()</code></h3>
+      <p><strong>Description:</strong> Adds or removes elements at any position.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">arr.splice(1, 2, "a", "b"); // Removes 2 elements from index 1 and adds "a", "b"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function splice(array, start, deleteCount, ...items) {
+  const removed = [];
+  // Store removed elements
+  for (let i = start; i < start + deleteCount; i++) {
+    removed.push(array[i]);
+  }
+  // Shift remaining elements
+  const newLength = array.length - deleteCount + items.length;
+  for (let i = newLength - 1; i >= start + items.length; i--) {
+    array[i] = array[i - items.length + deleteCount];
+  }
+  // Insert new items
+  for (let j = 0; j < items.length; j++) {
+    array[start + j] = items[j];
+  }
+  array.length = newLength;
+  return removed;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 7: Order Modification -->
+    <div class="section" id="group7-order-modification">
+      <h2 class="group-title">Order Modification</h2>
+      <h3 id="group7-array-reverse">6. <code>Array.reverse()</code></h3>
+      <p><strong>Description:</strong> Reverses the order of the array elements.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">arr.reverse(); // [3, 2, 1]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function reverse(array) {
+  for (let i = 0; i < Math.floor(array.length / 2); i++) {
+    const temp = array[i];
+    array[i] = array[array.length - 1 - i];
+    array[array.length - 1 - i] = temp;
+  }
+  return array;
+}</code></pre>
+      </div>
+      
+      <h3 id="group7-array-sort">7. <code>Array.sort()</code></h3>
+      <p><strong>Description:</strong> Sorts the array elements (by default, as strings).</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">arr.sort(); // Alphabetical or numerical sorting</code></pre>
+      </div>
+      <p><strong>Equivalent for loop (basic Bubble Sort):</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function sort(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array.length - 1; j++) {
+      if (String(array[j]) > String(array[j + 1])) {
+        const temp = array[j];
+        array[j] = array[j + 1];
+        array[j + 1] = temp;
+      }
+    }
+  }
+  return array;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 8: Filling and Copying -->
+    <div class="section" id="group8-filling-copying">
+      <h2 class="group-title">Filling and Copying</h2>
+      <h3 id="group8-array-fill">8. <code>Array.fill()</code></h3>
+      <p><strong>Description:</strong> Fills the array with a specified value.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">arr.fill(0, 1, 3); // [1, 0, 0, 4]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function fill(array, value, start = 0, end = array.length) {
+  for (let i = start; i < end; i++) {
+    array[i] = value;
+  }
+  return array;
+}</code></pre>
+      </div>
+      
+      <h3 id="group8-array-within">9. <code>ArrayWithin()</code></h3>
+      <p><strong>Description:</strong> Copies elements within the same array.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">// Copies elements from indices 2-3 to index 0
+within(arr, 0, 2, 4);</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function within(array, target, start, end = array.length) {
+  const copied = [];
+  for (let i = start; i < end; i++) copied.push(array[i]);
+  for (let j = 0; j < copied.length; j++) {
+    array[target + j] = copied[j];
+  }
+  return array;
+}</code></pre>
+      </div>
+      <p><strong>Comparisons and Use Cases:</strong></p>
+      <ul>
+        <li><code>push()/pop()</code>: Adding/removing at the end (Stack – LIFO)</li>
+        <li><code>shift()/unshift()</code>: Adding/removing at the beginning (Queue – FIFO)</li>
+        <li><code>splice()</code>: Modification at specific positions (Dynamic replacement)</li>
+        <li><code>reverse()</code>: Reverses order (Reverse display)</li>
+        <li><code>sort()</code>: Sorting (Data organization)</li>
+        <li><code>fill()</code>: Filling (Array initialization)</li>
+        <li><code>within()</code>: Internal copying (Buffer manipulation)</li>
+      </ul>
+      <p><strong>Practical Examples:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">// Using push() to accumulate data:
+const logs = [];
+logs.push("Error 404", "Warning"); // Adds logs at the end
+
+// Using splice() for replacement:
+const fruits = ["🍎", "🍌", "🍇"];
+fruits.splice(1, 1, "🥭"); // Removes "🍌" and adds "🥭"
+
+// Using within() for optimization:
+const buffer = [10, 20, 30, 40];
+within(buffer, 0, 2); // [30, 40, 30, 40]
+
+// Using fill() for initialization:
+const matrix = new Array(3).fill().map(() => new Array(3).fill(0));
+// Creates a 3x3 matrix filled with 0</code></pre>
+      </div>
+      <p><em>Note: The for loop implementations are simplified to demonstrate the logic. Native methods are more optimized and handle edge cases.</em></p>
+    </div>
+    <!-- General Group 3: Array Creation and Transformation -->
+    <h1 class="general-group3-title" id="general-group3-title">Group 3: Array Creation and Transformation</h1>
+    <!-- Group 9: Creating New Arrays (Without Modifying the Original) -->
+    <div class="section" id="group9-new-arrays">
+      
+      <h2 class="group-title">Creating New Arrays (Without Modifying the Original)</h2>
+      <h3 id="group9-array-concat">1. <code>Array.concat()</code></h3>
+      <p><strong>Description:</strong> Combines arrays into a new array.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const arr1 = [1, 2];
+const arr2 = [3, 4];
+const merged = arr1.concat(arr2); // [1, 2, 3, 4]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function concat(array, ...arrays) {
+  const novo = [...array];
+  for (const arr of arrays) {
+    for (let i = 0; i < arr.length; i++) {
+      novo.push(arr[i]);
+    }
+  }
+  return novo;
+}</code></pre>
+      </div>
+      
+      <h3 id="group9-array-slice">2. <code>Array.slice()</code></h3>
+      <p><strong>Description:</strong> Extracts a portion of the array into a new array.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const subArr = arr.slice(1, 3); // [2, 3]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function slice(array, start = 0, end = array.length) {
+  const novo = [];
+  for (let i = start; i < end && i < array.length; i++) {
+    novo.push(array[i]);
+  }
+  return novo;
+}</code></pre>
+      </div>
+      
+      <h3 id="group9-array-with">3. <code>Array.with()</code></h3>
+      <p><strong>Description:</strong> Creates a new array with one element replaced at a given index.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const novoArr = arr.with(1, 99); // [1, 99, 3]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function withMethod(array, index, value) {
+  const novo = [...array];
+  novo[index] = value;
+  return novo;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 10: Nested Array Manipulation -->
+    <div class="section" id="group10-nested-arrays">
+      <h2 class="group-title"> Nested Array Manipulation</h2>
+      <h3 id="group10-array-flat">4. <code>Array.flat()</code></h3>
+      <p><strong>Description:</strong> Flattens nested arrays.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const arrAninhado = [1, [2, [3]]];
+const flatArr = arrAninhado.flat(2); // [1, 2, 3]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop (for depth 1):</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function flat(array) {
+  const novo = [];
+  for (let i = 0; i < array.length; i++) {
+    if (Array.isArray(array[i])) {
+      for (const item of array[i]) novo.push(item);
+    } else {
+      novo.push(array[i]);
+    }
+  }
+  return novo;
+}</code></pre>
+      </div>
+      
+      <h3 id="group10-array-flatmap">5. <code>Array.flatMap()</code></h3>
+      <p><strong>Description:</strong> Maps and flattens the result (equivalent to map() followed by flat(1)).</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const duplicated = arr.flatMap(num => [num, num * 2]); // [1, 2, 2, 4]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function flatMap(array, callback) {
+  const novo = [];
+  for (let i = 0; i < array.length; i++) {
+    const result = callback(array[i], i, array);
+    if (Array.isArray(result)) {
+      for (const item of result) novo.push(item);
+    } else {
+      novo.push(result);
+    }
+  }
+  return novo;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 11: Immutable Copy Methods (ES2023+) -->
+    <div class="section" id="group11-immutable-copy">
+      <h2 class="group-title"> Immutable Copy Methods (ES2023+)</h2>
+      <h3 id="group11-array-toreversed">6. <code>Array.toReversed()</code></h3>
+      <p><strong>Description:</strong> Creates a reversed copy of the array (without modifying the original).</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const reversed = arr.toReversed(); // [3, 2, 1]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function toReversed(array) {
+  const novo = [];
+  for (let i = array.length - 1; i >= 0; i--) {
+    novo.push(array[i]);
+  }
+  return novo;
+}</code></pre>
+      </div>
+      
+      <h3 id="group11-array-tosorted">7. <code>Array.toSorted()</code></h3>
+      <p><strong>Description:</strong> Creates a sorted copy of the array.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const sorted = arr.toSorted((a, b) => b - a); // [3, 2, 1]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop (basic simulation):</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function toSorted(array, compareFn) {
+  const novo = [...array];
+  return novo.sort(compareFn);
+}</code></pre>
+      </div>
+      
+      <h3 id="group11-array-tospliced">8. <code>Array.toSpliced()</code></h3>
+      <p><strong>Description:</strong> Creates a copy of the array with elements added or removed.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const spliced = arr.toSpliced(1, 1, 99); // [1, 99, 3]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function toSpliced(array, start, deleteCount, ...items) {
+  const novo = [...array];
+  novo.splice(start, deleteCount, ...items);
+  return novo;
+}</code></pre>
+      </div>
+      <p><strong>Comparisons and Use Cases:</strong></p>
+      <ul>
+        <li><code>concat()</code>: Combines data from multiple sources.</li>
+        <li><code>slice()</code>: Safely extracts subarrays (useful for pagination).</li>
+        <li><code>flat()</code>: Flattens nested arrays (e.g., JSON).</li>
+        <li><code>flatMap()</code>: Processes and flattens simultaneously.</li>
+        <li><code>toReversed()</code>: Creates a reversed copy without modifying the original.</li>
+        <li><code>toSorted()</code>: Provides immutable sorting for display purposes.</li>
+        <li><code>with()</code>: Immutable element update.</li>
+        <li><code>toSpliced()</code>: Immutable update with addition or removal of elements.</li>
+      </ul>
+      <p><strong>Practical Examples:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">// Using flatMap() to expand data:
+const phrases = ["Hello world", "JS is cool"];
+const words = phrases.flatMap(phrase => phrase.split(" "));
+// Result: ["Hello", "world", "JS", "is", "cool"]
+
+// Using toSorted() for safe sorting:
+const numbers = [3, 1, 2];
+const sorted = numbers.toSorted((a, b) => a - b); // [1, 2, 3]
+// The original array remains [3, 1, 2]
+
+// Using with() for immutable updates:
+const cart = ["🍎", "🍌"];
+const newCart = cart.with(1, "🥝"); // ["🍎", "🥝"]
+
+// Using toSpliced() for element replacement:
+const months = ["Jan", "Feb", "Apr"]; // "Mar" is missing
+const corrected = months.toSpliced(2, 0, "Mar"); // Inserts "Mar" at index 2</code></pre>
+      </div>
+      <p><em>Note: The methods toReversed(), toSorted(), toSpliced(), and with() are new in ES2023 and do not modify the original array.</em></p>
+    </div>
+    <!-- General Group 4: Iteration and Accumulation -->
+    <h1 class="general-group4-title" id="general-group4-title">Group 4: Iteration and Accumulation</h1>
+    <!-- Group 12: Iteration and Transformation -->
+    <div class="section" id="group12-iteration-transformation">
+      <h2 class="group-title"> Iteration and Transformation</h2>
+      <h3 id="group12-array-foreach">1. <code>Array.forEach()</code></h3>
+      <p><strong>Description:</strong> Executes a function for each element.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const arr = [1, 2, 3];
+arr.forEach(num => console.log(num * 2)); // Prints: 2, 4, 6</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function forEach(array, callback) {
+  for (let i = 0; i < array.length; i++) {
+    callback(array[i], i, array);
+  }
+}</code></pre>
+      </div>
+      
+      <h3 id="group12-array-map">2. <code>Array.map()</code></h3>
+      <p><strong>Description:</strong> Creates a new array by transforming each element.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const doubled = arr.map(num => num * 2); // [2, 4, 6]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function map(array, callback) {
+  const novo = [];
+  for (let i = 0; i < array.length; i++) {
+    novo.push(callback(array[i], i, array));
+  }
+  return novo;
+}</code></pre>
+      </div>
+      
+      <h3 id="group12-array-filter">3. <code>Array.filter()</code></h3>
+      <p><strong>Description:</strong> Filters the array based on a condition.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const evens = arr.filter(num => num % 2 === 0); // [2]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function filter(array, callback) {
+  const novo = [];
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i], i, array)) novo.push(array[i]);
+  }
+  return novo;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Group 13: Reduction and Accumulation -->
+    <div class="section" id="group13-reduction-accumulation">
+      <h2 class="group-title"> Reduction and Accumulation</h2>
+      <h3 id="group13-array-reduce">4. <code>Array.reduce()</code></h3>
+      <p><strong>Description:</strong> Reduces the array to a single value (from left to right).</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const sum = arr.reduce((acc, num) => acc + num, 0); // 6</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function reduce(array, callback, initial) {
+  let acc = initial !== undefined ? initial : array[0];
+  let start = initial !== undefined ? 0 : 1;
+  for (let i = start; i < array.length; i++) {
+    acc = callback(acc, array[i], i, array);
+  }
+  return acc;
+}</code></pre>
+      </div>
+      
+      <h3 id="group13-array-reduceright">5. <code>Array.reduceRight()</code></h3>
+      <p><strong>Description:</strong> Reduces the array from right to left.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const reversedStr = ["m", "u", "n"].reduceRight((acc, letter) => acc + letter, ""); // "num"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function reduceRight(array, callback, initial) {
+  let acc = initial !== undefined ? initial : array[array.length - 1];
+  let start = initial !== undefined ? array.length - 1 : array.length - 2;
+  for (let i = start; i >= 0; i--) {
+    acc = callback(acc, array[i], i, array);
+  }
+  return acc;
+}</code></pre>
+      </div>
+    </div>
+    <!-- General Group 5: Array Iterators -->
+    <h1 class="general-group5-title" id="general-group5-title">Group 5: Array Iterators</h1>
+    <!-- Group 14: Iterators -->
+    <div class="section" id="group14-iterators">
+      <h2 class="group-title">Iterators</h2>
+      <h3 id="group14-array-entries">6. <code>Array.entries()</code></h3>
+      <p><strong>Description:</strong> Returns an iterator of [index, value] pairs.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const iterator = arr.entries();
+console.log(iterator.next().value); // [0, 1]</code></pre>
+      </div>
+      <p><strong>For loop simulation of the iterator:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function entries(array) {
+  let index = 0;
+  return {
+    next: () => {
+      return index < array.length 
+        ? { value: [index, array[index++]], done: false } 
+        : { done: true };
+    }
+  };
+}</code></pre>
+      </div>
+      
+      <h3 id="group14-array-keys">7. <code>Array.keys()</code></h3>
+      <p><strong>Description:</strong> Returns an iterator of the array's indices.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">for (const key of arr.keys()) console.log(key); // 0, 1, 2</code></pre>
+      </div>
+      <p><strong>For loop simulation of the iterator:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function keys(array) {
+  let index = 0;
+  return {
+    next: () => {
+      return index < array.length 
+        ? { value: index++, done: false } 
+        : { done: true };
+    }
+  };
+}</code></pre>
+      </div>
+      
+      <h3 id="group14-array-values">8. <code>Array.values()</code></h3>
+      <p><strong>Description:</strong> Returns an iterator of the array's values.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">for (const value of arr.values()) console.log(value); // 1, 2, 3</code></pre>
+      </div>
+      <p><strong>For loop simulation of the iterator:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function values(array) {
+  let index = 0;
+  return {
+    next: () => {
+      return index < array.length 
+        ? { value: array[index++], done: false } 
+        : { done: true };
+    }
+  };
+}</code></pre>
+      </div>
+      
+      <h3 id="group14-array-symboliterator">9. <code>Array[Symbol.iterator]()</code></h3>
+      <p><strong>Description:</strong> The default iterator of the array (equivalent to values()).</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const iterator = arr[Symbol.iterator]();
+console.log(iterator.next().value); // 1</code></pre>
+      </div>
+      <p><strong>Implementation:</strong> Same as the values() function above.</p>
+      <p><strong>Comparisons and Use Cases:</strong></p>
+      <ul>
+        <li><code>forEach()</code>: Executes actions for side effects (e.g., logging).</li>
+        <li><code>map()</code>: Creates a new transformed array.</li>
+        <li><code>filter()</code>: Creates a new filtered array.</li>
+        <li><code>reduce()</code>/<code>reduceRight()</code>: Aggregate values (sum, concatenation).</li>
+        <li><code>entries()</code>, <code>keys()</code>, <code>values()</code>, <code>[Symbol.iterator]()</code>: Facilitate iteration with access to indices and values.</li>
+      </ul>
+      <p><strong>Practical Examples:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">// Using map() to format data:
+const prices = [10, 20, 30];
+const formatted = prices.map(p => `R$${p},00`); // ["R$10,00", "R$20,00", "R$30,00"]
+
+// Using reduce() to group objects:
+const people = [{name: "Ana"}, {name: "John"}];
+const names = people.reduce((acc, p) => acc + p.name + " ", ""); // "Ana John "
+
+// Using entries() for detailed loop:
+for (const [i, value] of arr.entries()) {
+  console.log(`Index ${i}: ${value}`);
+}
+
+// Using reduceRight() to reverse a string:
+const str = "abc";
+const reversedStr = str.split("").reduceRight((acc, char) => acc + char, ""); // "cba"</code></pre>
+      </div>
+    </div>
+    <!-- General Group 6: String Manipulation -->
+    <h1 class="general-group6-title" id="general-group6-title">Group 6: String Manipulation</h1>
+    <!-- Group 15: String Methods -->
+    <div class="section" id="group15-string-methods">
+      
+      <h2 class="group-title"> String Methods</h2>
+      
+      <h3 id="group15-length">1. <code>String.length</code></h3>
+      <p><strong>Description:</strong> Returns the number of characters in the string.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">const str = "Hello";
+console.log(str.length); // 5</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function length(str) {
+  let count = 0;
+  for (const _ of str) count++;
+  return count;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-charat">2. <code>String.charAt()</code></h3>
+      <p><strong>Description:</strong> Returns the character at the specified index.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(str.charAt(1)); // "e"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function charAt(str, index) {
+  for (let i = 0; i < str.length; i++) {
+    if (i === index) return str[i];
+  }
+  return "";
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-charcodeat">3. <code>String.charCodeAt()</code></h3>
+      <p><strong>Description:</strong> Returns the Unicode code of the character at the specified index.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(str.charCodeAt(0)); // 72 (for "H")</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function charCodeAt(str, index) {
+  for (let i = 0; i < str.length; i++) {
+    if (i === index) return str.charCodeAt(i);
+  }
+  return NaN;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-at">4. <code>String.at()</code></h3>
+      <p><strong>Description:</strong> Returns the character at the specified index, supporting negative indices.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(str.at(-1)); // "o"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function at(str, index) {
+  const adjustedIndex = index < 0 ? str.length + index : index;
+  for (let i = 0; i < str.length; i++) {
+    if (i === adjustedIndex) return str[i];
+  }
+  return undefined;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-slice-string">5. <code>String.slice()</code></h3>
+      <p><strong>Description:</strong> Extracts a portion of the string.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(str.slice(1, 3)); // "el"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function slice(str, start, end = str.length) {
+  let substring = "";
+  for (let i = start; i < end && i < str.length; i++) {
+    substring += str[i];
+  }
+  return substring;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-substring-string">6. <code>String.substring()</code></h3>
+      <p><strong>Description:</strong> Similar to slice(), but swaps indices if needed.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(str.substring(3, 1)); // "el"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function substring(str, start, end) {
+  const [s, e] = start > end ? [end, start] : [start, end];
+  return slice(str, s, e);
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-substr-string">7. <code>String.substr()</code> <em>(Deprecated)</em></h3>
+      <p><strong>Description:</strong> Extracts a substring from a given index with a specified length.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(str.substr(1, 2)); // "el"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function substr(str, start, length) {
+  let substring = "";
+  for (let i = start; i < start + length && i < str.length; i++) {
+    substring += str[i];
+  }
+  return substring;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-touppercase-string">8. <code>String.toUpperCase()</code></h3>
+      <p><strong>Description:</strong> Converts the string to uppercase.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(str.toUpperCase()); // "HELLO"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function toUpperCase(str) {
+  let upper = "";
+  for (const char of str) {
+    const code = char.charCodeAt(0);
+    upper += code >= 97 && code <= 122 ? String.fromCharCode(code - 32) : char;
+  }
+  return upper;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-tolowercase-string">9. <code>String.toLowerCase()</code></h3>
+      <p><strong>Description:</strong> Converts the string to lowercase.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("HELLO".toLowerCase()); // "hello"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function toLowerCase(str) {
+  let lower = "";
+  for (const char of str) {
+    const code = char.charCodeAt(0);
+    lower += code >= 65 && code <= 90 ? String.fromCharCode(code + 32) : char;
+  }
+  return lower;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-concat-string">10. <code>String.concat()</code></h3>
+      <p><strong>Description:</strong> Concatenates strings.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log(str.concat(" World")); // "Hello World"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function concat(str, ...strings) {
+  let result = str;
+  for (const s of strings) {
+    for (const char of s) result += char;
+  }
+  return result;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-trim-string">11. <code>String.trim()</code></h3>
+      <p><strong>Description:</strong> Removes whitespace from the beginning and end of the string.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("   Hello   ".trim()); // "Hello"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function trim(str) {
+  let start = 0, end = str.length - 1;
+  while (str[start] === " ") start++;
+  while (str[end] === " ") end--;
+  let trimmed = "";
+  for (let i = start; i <= end; i++) trimmed += str[i];
+  return trimmed;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-trimstart-string">12. <code>String.trimStart()</code> and <code>String.trimEnd()</code></h3>
+      <p><strong>Description:</strong> Removes whitespace only from the beginning or the end of the string.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("   Hello   ".trimStart()); // "Hello   "</code></pre>
+      </div>
+      <p><strong>Equivalent for loop (trimStart):</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function trimStart(str) {
+  let start = 0;
+  while (str[start] === " ") start++;
+  let trimmed = "";
+  for (let i = start; i < str.length; i++) trimmed += str[i];
+  return trimmed;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-padstart-string">13. <code>String.padStart()</code></h3>
+      <p><strong>Description:</strong> Pads the string at the beginning until it reaches a specified length.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("5".padStart(3, "0")); // "005"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function padStart(str, targetLength, padString = " ") {
+  let padded = str;
+  while (padded.length < targetLength) {
+    padded = padString + padded;
+  }
+  return padded.slice(-targetLength);
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-padend-string">14. <code>String.padEnd()</code></h3>
+      <p><strong>Description:</strong> Pads the string at the end until it reaches a specified length.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("5".padEnd(3, "0")); // "500"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function padEnd(str, targetLength, padString = " ") {
+  let padded = str;
+  while (padded.length < targetLength) {
+    padded += padString;
+  }
+  return padded.slice(0, targetLength);
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-repeat-string">15. <code>String.repeat()</code></h3>
+      <p><strong>Description:</strong> Repeats the string a specified number of times.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("a".repeat(3)); // "aaa"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function repeat(str, times) {
+  let result = "";
+  for (let i = 0; i < times; i++) result += str;
+  return result;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-replace-string">16. <code>String.replace()</code></h3>
+      <p><strong>Description:</strong> Replaces the first occurrence of a pattern with another string.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("Hello World".replace("World", "JS")); // "Hello JS"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function replace(str, search, replacement) {
+  let result = "";
+  let replaced = false;
+  for (let i = 0; i < str.length; ) {
+    if (!replaced && str.slice(i, i + search.length) === search) {
+      result += replacement;
+      i += search.length;
+      replaced = true;
+    } else {
+      result += str[i];
+      i++;
+    }
+  }
+  return result;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-replaceall-string">17. <code>String.replaceAll()</code></h3>
+      <p><strong>Description:</strong> Replaces all occurrences of a pattern with another string.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("a-a-a".replaceAll("a", "b")); // "b-b-b"</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function replaceAll(str, search, replacement) {
+  let result = "";
+  for (let i = 0; i < str.length; ) {
+    if (str.slice(i, i + search.length) === search) {
+      result += replacement;
+      i += search.length;
+    } else {
+      result += str[i];
+      i++;
+    }
+  }
+  return result;
+}</code></pre>
+      </div>
+      
+      <h3 id="group15-split-string">18. <code>String.split()</code></h3>
+      <p><strong>Description:</strong> Splits the string into an array based on a separator.</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">console.log("a,b,c".split(",")); // ["a", "b", "c"]</code></pre>
+      </div>
+      <p><strong>Equivalent for loop:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">function split(str, separator) {
+  const arr = [];
+  let current = "";
+  for (const char of str) {
+    if (char === separator) {
+      arr.push(current);
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+  arr.push(current);
+  return arr;
+}</code></pre>
+      </div>
+      <p><strong>Comparisons and Use Cases:</strong></p>
+      <ul>
+        <li><code>slice()</code>: Flexible extraction, supports negative indices.</li>
+        <li><code>substring()</code>: Extraction without negative indices.</li>
+        <li><code>padStart()</code>: Useful for formatting (e.g., leading zeros).</li>
+        <li><code>replaceAll()</code>: Text cleaning (replace multiple occurrences).</li>
+        <li><code>split()</code>: Processing CSV/TSV data.</li>
+        <li><code>trim()</code>: Cleaning user input.</li>
+      </ul>
+      <p><strong>Practical Examples:</strong></p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="language-label">js</span>
+          <button class="copy-button" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><code class="language-js">// Using padStart() to format dates:
+const day = "5".padStart(2, "0"); // "05"
+
+// Using split() and map() to process data:
+const prices = "10,20,30".split(",").map(Number); // [10, 20, 30]
+
+// Using replaceAll() to sanitize HTML:
+const sanitized = "<div>Text</div>".replaceAll("<", "&lt;"); // "&lt;div>Text&lt;/div>"
+
+// Using trim() for form inputs:
+const email = "  user@example.com  ".trim(); // "user@example.com"</code></pre>
+      </div>
+      <p><em>Note: The for loop implementations are simplified to demonstrate the logic. Native methods are more optimized and handle edge cases.</em></p>
+    </div>
+  </div>
+
+  <script>
+    // Toggle the sidebar visibility
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('visible');
+    }
+    // Filter index items in the header search input
+    function filterIndex() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const links = document.querySelectorAll('#indexList li a');
+      links.forEach(link => {
+        const text = link.textContent.toLowerCase();
+        link.parentElement.style.display = text.includes(input) ? '' : 'none';
+      });
+    }
+    // Filter sidebar items based on the internal search input
+    function filterSidebar() {
+      const input = document.getElementById('sidebarSearch').value.toLowerCase();
+      const items = document.querySelectorAll('#indexList li');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(input) ? '' : 'none';
+      });
+    }
+    // Copy code from a code block
+    function copyCode(button) {
+      const codeBlock = button.parentElement.nextElementSibling;
+      const codeText = codeBlock.innerText;
+      navigator.clipboard.writeText(codeText).then(() => {
+        button.textContent = "Copied!";
+        setTimeout(() => button.textContent = "Copy", 2000);
+      });
+    }
+  </script>
+</body>
+</html>

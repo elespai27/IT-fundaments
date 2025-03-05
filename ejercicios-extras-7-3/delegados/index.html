@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta author="Verónica González Amor" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delegados</title>
+  </head>
+  <body>
+    <!-- EXTRA1 - Delegados  
+    1.- Se pide al usuario/a cuantos alumnos hay en clase
+    2.- Se pide el nombre de dos candidatos/as
+    3.- Se introducen tantos votos como alumnos/as hay en clase, mediante prompts. Los votos son los nombres de los alumnos/a
+    4.- Se muestra por pantalla quien ha ganado o si ha habido empate. Y si ha habido algun voto nulo. -->
+
+    <input
+      type="number"
+      id="alumnas"
+      placeholder="Cuántos alumnos hay en clase"
+    />
+    <input type="button" value="comenzar" onclick="asignarDelegadas()" />
+
+    <p id="result"></p>
+
+    <script src="script.js"></script>
+  </body>
+</html>
